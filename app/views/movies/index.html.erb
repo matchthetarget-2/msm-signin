@@ -1,166 +1,124 @@
-<div>
-  <div>
-    <h1>
-      List of all movies
-    </h1>
-  </div>
-</div>
+<h1>
+  List of all movies
+</h1>
 
+<form action="/insert_movie">
+  <div>
+    <label for="title_box">
+      Title
+    </label>
+
+    <input placeholder="The Great Gatsby" type="text" id="title_box" name="query_title">
+  </div>
+
+  <div>
+    <label for="year_box">
+      Year
+    </label>
+  
+    <input placeholder="2096" type="text" id="year_box" name="query_year">
+  </div>
+
+  <div>
+    <label for="description_box">
+      Description
+    </label>
+
+    <textarea placeholder="long description..." id="description_box" name="query_description" rows="3"></textarea>
+  </div>
+
+  <div>
+    <label for="duration_box">
+      Duration
+    </label>
+
+    <input placeholder="120" type="text" id="duration_box" name="query_duration">
+  </div>
+
+  <div>
+    <label for="image_box">
+      Image
+    </label>
+
+    <input placeholder="Image URL" id="image_box" name="query_image"></textarea>
+  </div>
+
+  <div>
+    <label for="director_id_box">
+      Director
+    </label>
+
+    <%# <input id="director_id_box" name="query_director_id"> %>
+    <select id="director_id_box" name="query_director_id">
+        <% Director.all.each do |director| %>
+          <option value="<%= director.id %>">
+            <%= director.name %>
+          </option>
+        <% end %>
+    </select>
+  </div>
+
+  <button>
+    Add movie
+  </button>
+</form>
 <hr>
 
-<div>
-  <div>
-    <h2>
-      Add a new movie
-    </h2>
+<table border="1">
+  <tr>
+    <th>
+      ID
+    </th>
 
-    <form action="/insert_movie" method="post">
-      <div>
-        <label for="title_box">
-          Title
-        </label>
+    <th>
+      Image
+    </th>
 
-        <input type="text" id="title_box" name="query_title">
-      </div>
+    <th>
+      Title
+    </th>
 
-      <div>
-        <label for="year_box">
-          Year
-        </label>
+    <th>
+      Year
+    </th>
 
-        <input type="text" id="year_box" name="query_year">
-      </div>
+    <th>
+      Director
+    </th>
 
-      <div>
-        <label for="duration_box">
-          Duration
-        </label>
+    <th>
+    </th>
+  </tr>
 
-        <input type="text" id="duration_box" name="query_duration">
-      </div>
+  <% @list_of_movies.each do |a_movie| %>
+  <tr>
+    <td>
+      <%= a_movie.id %>
+    </td>
 
-      <div>
-        <label for="director_id_box">
-          Director
-        </label>
+    <td>
+      <img src="<%= a_movie.image %>">
+    </td>
 
-        <input type="text" id="director_id_box" name="query_director_id">
-      </div>
+    <td>
+      <%= a_movie.title %>
+    </td>
 
-      <div>
-        <label for="description_box">
-          Description
-        </label>
+    <td>
+      <%= a_movie.year %>
+    </td>
 
-        <textarea id="description_box" name="query_description" rows="3"></textarea>
-      </div>
+    <td>
+      <a href="/directors/<%= a_movie.director.id %>">
+        <%= a_movie.director.name %>
+      </a>
+    </td>
 
-      <div>
-        <label for="image_box">
-          Image
-        </label>
-
-        <input type="text" id="image_box" name="query_image">
-      </div>
-
-      <button>
-        Create movie
-      </button>
-    </form>
-  </div>
-</div>
-
-<hr>
-<div>
-  <div>
-    <table border="1">
-      <tr>
-        <th>
-          ID
-        </th>
-
-        <th>
-          Title
-        </th>
-
-        <th>
-          Year
-        </th>
-
-        <th>
-          Duration
-        </th>
-
-        <th>
-          Director
-        </th>
-
-        <th>
-          Description
-        </th>
-
-        <th>
-          Image
-        </th>
-
-        <th>
-          Created at
-        </th>
-
-        <th>
-          Updated at
-        </th>
-
-        <th>
-        </th>
-      </tr>
-
-      <% @list_of_movies.each do |a_movie| %>
-      <tr>
-        <td>
-          <%= a_movie.id %>
-        </td>
-
-        <td>
-          <%= a_movie.title %>
-        </td>
-
-        <td>
-          <%= a_movie.year %>
-        </td>
-
-        <td>
-          <%= a_movie.duration %>
-        </td>
-
-        <td>
-          <%= a_movie.director_id %>
-        </td>
-
-        <td>
-          <%= a_movie.description %>
-        </td>
-
-        <td>
-          <%= a_movie.image %>
-        </td>
-
-        <td>
-          <%= time_ago_in_words(a_movie.created_at) %> ago
-        </td>
-        <td>
-          <%= time_ago_in_words(a_movie.updated_at) %> ago
-        </td>
-
-        <td>
-          <a href="/movies/<%= a_movie.id %>">
-            Show details
-          </a>
-        </td>
-      </tr>
-      <% end %>
-    </table>
-  </div>
-</div>
-
-<hr>
+    <td>
+      <a href="/movies/<%= a_movie.id %>">
+        Show details
+      </a>
+    </td>
+  </tr>
+  <% end %>
+</table>
