@@ -3,3 +3,5 @@
 <p>
   The youngest director in our dataset right now is <a href="/directors/<%= @dir.id %>"><%= @dir.name %></a>, born on <%= @dir.dob.strftime("%B %e, %Y") %>.
 </p>
+
+<p>(<a href="http://strftime.net/">http://strftime.net/</a> is handy for putting together the formatting strings for the <code>.strftime</code> method.)</p>

@@ -1,116 +1,159 @@
-<div>
-  <div>
-    <h1>
-      Director #<%= @the_director.id %> details
-    </h1>
+<h1>
+  Director #<%= @the_director.id %> details
+</h1>
 
-    <div>
-      <div>
-        <a href="/directors">
-          Go back
-        </a>
-      </div>
-
-      <div>
-        <a href="/delete_director/<%= @the_director.id %>">
-          Delete director
-        </a>
-      </div>
-    </div>
-
-    <dl>
-      <dt>
-        Name
-      </dt>
-      <dd>
-        <%= @the_director.name %>
-      </dd>
-
-      <dt>
-        Dob
-      </dt>
-      <dd>
-        <%= @the_director.dob %>
-      </dd>
-
-      <dt>
-        Bio
-      </dt>
-      <dd>
-        <%= @the_director.bio %>
-      </dd>
-
-      <dt>
-        Image
-      </dt>
-      <dd>
-        <%= @the_director.image %>
-      </dd>
-
-      <dt>
-        Created at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@the_director.created_at) %> ago
-      </dd>
-
-      <dt>
-        Updated at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@the_director.updated_at) %> ago
-      </dd>
-    </dl>
-  </div>
-</div>
+<a href="/directors">
+  Go back
+</a>
+<a href="/delete_director/<%= @the_director.id %>">
+  Delete director
+</a>
 
 <hr>
 
+<dl>
+  <dt>
+    Name
+  </dt>
+  <dd>
+    <%= @the_director.name %>
+  </dd>
 
-<div>
-  <div>
-    <h2>
-      Edit director
-    </h2>
+  <dt>
+    Dob
+  </dt>
+  <dd>
+    <%= @the_director.dob %>
+  </dd>
 
-    <form action="/modify_director/<%= @the_director.id %>"  method="post" >
-      <div>
-        <label for="name_box">
-          Name
-        </label>
+  <dt>
+    Bio
+  </dt>
+  <dd>
+    <%= @the_director.bio %>
+  </dd>
 
-        <input type="text" id="name_box" name="query_name" value="<%= @the_director.name %>">
-      </div>
+  <dt>
+    Image
+  </dt>
+  <dd>
+    <img src="<%= @the_director.image %>">
+  </dd>
 
-      <div>
-        <label for="dob_box">
-          Dob
-        </label>
+  <dt>
+    Created at
+  </dt>
+  <dd>
+    <%= time_ago_in_words(@the_director.created_at) %> ago
+  </dd>
 
-        <input type="date" id="dob_box" name="query_dob" value="<%= @the_director.dob %>">
-      </div>
-
-      <div>
-        <label for="bio_box">
-          Bio
-        </label>
-
-        <textarea id="bio_box" name="query_bio"><%= @the_director.bio %></textarea>
-      </div>
-
-      <div>
-        <label for="image_box">
-          Image
-        </label>
-
-        <input type="text" id="image_box" name="query_image" value="<%= @the_director.image %>">
-      </div>
-
-      <button>
-        Update director
-      </button>
-    </form>
-  </div>
-</div>
+  <dt>
+    Updated at
+  </dt>
+  <dd>
+    <%= time_ago_in_words(@the_director.updated_at) %> ago
+  </dd>
+</dl>
 
 <hr>
+
+<h2>Filmography</h2>
+
+<table border="1">
+  <tr>
+    <th>
+      ID
+    </th>
+
+    <th>
+      Image
+    </th>
+
+    <th>
+      Title
+    </th>
+
+    <th>
+      Year
+    </th>
+
+    <th>
+      Director
+    </th>
+
+    <th>
+    </th>
+  </tr>
+
+  <% @the_director.filmography.each do |a_movie| %>
+  <tr>
+    <td>
+      <%= a_movie.id %>
+    </td>
+
+    <td>
+      <img src="<%= a_movie.image %>">
+    </td>
+
+    <td>
+      <%= a_movie.title %>
+    </td>
+
+    <td>
+      <%= a_movie.year %>
+    </td>
+
+    <td>
+      <%= @the_director.name %>
+    </td>
+
+    <td>
+      <a href="/movies/<%= a_movie.id %>">
+        Show details
+      </a>
+    </td>
+  </tr>
+  <% end %>
+</table>
+
+<hr>
+<h2>Edit <%= @the_director.name %></h2>
+
+<form action="/modify_director/<%= @the_director.id %>">
+  <div>
+    <label for="name_box">
+      Name
+    </label>
+
+    <input placeholder="Juan Perez" type="text" id="name_box" name="query_name" value="<%= @the_director.name %>">
+  </div>
+
+  <div>
+    <label for="dob_box">
+      DOB
+    </label>
+  
+    <input placeholder="2096" type="text" id="dob_box" name="query_dob" value="<%= @the_director.dob %>">
+  </div>
+
+  <div>
+    <label for="bio_box">
+      Bio
+    </label>
+
+    <textarea placeholder="long bio..." id="bio_box" name="query_bio" rows="3"><%= @the_director.bio %></textarea>
+  </div>
+
+  <div>
+    <label for="image_box">
+      Image
+    </label>
+
+    <input placeholder="Image URL" id="image_box" name="query_image" value="<%= @the_director.image %>">
+  </div>
+
+
+  <button>
+    Update director
+  </button>
+</form>
