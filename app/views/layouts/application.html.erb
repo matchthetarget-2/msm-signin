@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>VanillaRails7</title>
+    <title>MSM Signin</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -11,6 +11,45 @@
   </head>
 
   <body>
+    <div>
+      <%= alert %>
+    </div>
+
+    <div>
+      <%= notice %>
+    </div>
+
+    <% if session[:user_id].present? %>
+      <nav>
+        <ul>
+          <li>
+            <a href="/user_sign_out">Sign out</a>
+          </li>
+          <li>
+            <a href="/bookmarks">My bookmarks</a>
+          </li>
+          <li>
+            <a href="/">Home</a>
+          </li>
+        </ul>
+      </nav>
+
+    <% else %>
+      <nav>
+        <ul>
+          <li>
+            <a href="/user_sign_in">Sign in</a>
+          </li>
+          <li>
+            <a href="/user_sign_up">Sign up</a>
+          </li>
+          <li>
+            <a href="/">Home</a>
+          </li>
+        </ul>
+      </nav>
+    <% end %>
+
     <%= yield %>
   </body>
 </html>
